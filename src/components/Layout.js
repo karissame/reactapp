@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import Header from "./Header";
 import Footer from "./Footer";
 import Profile from "./Profile";
+import axios from 'axios';
+
 
 export default class Layout extends React.Component {
     constructor() {
@@ -25,11 +27,18 @@ export default class Layout extends React.Component {
                 loggedIn: false
             });
         } else {
-            this.setState({
-                loggedIn: true
-            });
+                axios.post('/login',loginObj)
+                  .then(function (response) {
+                    console.log(response);
+                  })
+                     .catch(function (error) {
+                      console.log(error);
+                      });
+            // this.setState({
+            //     loggedIn: true
+            };
         }
-    }
+
     renderHeader() {
         return <Header login={(a) => this.login(a)} user={this.state.user} loggedIn={this.state.loggedIn}/>;
     }

@@ -8,6 +8,10 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import routes from './routes';
 import NotFoundPage from './components/NotFoundPage';
+import axios from 'axios';
+const bodyParser = require('body-parser');
+
+
 const mongoose = require('mongoose');
 const bluebird = require('bluebird');
 mongoose.Promise = bluebird;
@@ -21,11 +25,9 @@ app.set('views', path.join(__dirname, 'views'));
 
 // define the folder that will be used for static assets
 app.use(Express.static(path.join(__dirname, 'static')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get("/login",function(req,res){
-
-    res.send("Do your login");
-});
 
 // ******  PASSWORD ENCRYPTION  ******
 var bcrypt = require('bcrypt');
@@ -41,12 +43,17 @@ bcrypt.genSalt(saltRounds,function(err,salt){
     });
 });
 
-hash="$2a$10$FrjwaswIyGTg/RcTvUtpi.xvxSXEQiHHjBqnobQPHMolqDl4N3dGG";
+var hash="$2a$10$FrjwaswIyGTg/RcTvUtpi.xvxSXEQiHHjBqnobQPHMolqDl4N3dGG";
 bcrypt.compare(myPass,hash,function(err,res){
     console.log("res",res);
 });
 // ********************
-
+app.post("/login",function(req,res){
+    console.log(req.body);
+    var username=req.body.username;
+    var password=req.body.password;
+    res.send("Do your login");
+});
 
 // universal routing and rendering
 app.get('*', (req, res) => {
