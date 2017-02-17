@@ -124,7 +124,8 @@ app.post("/login",function(req,res){
                     // console.log("res compare",res);
                     if(loginresult){
                         console.log("passwords match");
-                        res.json({login:true});
+                        console.log("user object is: "+user);
+                        res.json({login:true,user:user});
                     } else {
                         console.log("passwords don't match");
                         res.json({login:false});

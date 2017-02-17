@@ -12,14 +12,15 @@ export default class Layout extends React.Component {
         this.state = {
             loggedIn: false,
             user: {
-                username: "testme",
-                fname: "Patrick",
-                lname: "Bullion",
-                imgUrl: "https://avatars1.githubusercontent.com/u/20978249?v=3&u=26d15bb28c9158228d4ba593cdc7d2ad4482ff6b&s=400"
+                username: "",
+                fname: "",
+                lname: "",
+                imgUrl: ""
             }
         };
     }
     login(loginObj) {
+        const self=this;
         console.log("in login");
         if (this.state.loggedIn) {
             this.setState({
@@ -29,10 +30,11 @@ export default class Layout extends React.Component {
                 axios.post('/login',loginObj)
                   .then(function (response) {
                     console.log("Got data back from the server");
-                    console.log(response.data.login);
+                    console.log(response);
                     if (response.data.login) {
-                        this.setState({
-                            loggedIn: true
+                        self.setState({
+                            loggedIn: true,
+                            user: response.data.user
                         });
                     }
 
