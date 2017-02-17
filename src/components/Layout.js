@@ -48,7 +48,7 @@ export default class Layout extends React.Component {
 
 
         }
-
+    
     renderHeader() {
         return <Header login={(a) => this.login(a)} user={this.state.user} loggedIn={this.state.loggedIn}/>;
     }
