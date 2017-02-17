@@ -54,6 +54,18 @@ app.post("/login",function(req,res){
     var password=req.body.password;
     res.send("Do your login");
 });
+// **************************
+const mongoose = require('mongoose');
+const UserSchema = mongoose.model('User',   {
+    username:   { type: String, required: true},
+    fname:   { type: String, required: true},
+    lname:   { type: String, required: true},
+    password:   { type: String, required: true},
+    imageUrl:   { type: String},
+
+});
+
+
 
 // universal routing and rendering
 app.get('*', (req, res) => {
