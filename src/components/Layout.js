@@ -21,7 +21,6 @@ export default class Layout extends React.Component {
     }
     login(loginObj) {
         console.log("in login");
-        console.log(loginObj);
         if (this.state.loggedIn) {
             this.setState({
                 loggedIn: false
@@ -29,14 +28,23 @@ export default class Layout extends React.Component {
         } else {
                 axios.post('/login',loginObj)
                   .then(function (response) {
-                    console.log(response);
+                    console.log("Got data back from the server");
+                    console.log(response.data.login);
+                    if (response.data.login) {
+                        this.setState({
+                            loggedIn: true
+                        });
+                    }
+
+
                   })
-                     .catch(function (error) {
-                      console.log(error);
-                      });
-            // this.setState({
-            //     loggedIn: true
-            };
+                  .catch(function (error) {
+                   console.log(error);
+                   });
+              }
+
+
+
         }
 
     renderHeader() {
